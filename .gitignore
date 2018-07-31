@@ -1,0 +1,5 @@
+bin
+obj
+.vscode/database.json
+.vscode/settings.json
+.vscode/last.sql

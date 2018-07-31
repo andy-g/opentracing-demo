@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+## --------- Jaeger -------------- ##
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    restart: always
+    ports: 
+      - 6831:6831/udp
+      - 16686:16686
+
+## --------- OpenTracing Demo (dotnet core) -------------- ##
+  open-tracing-eanbled:
+      image: open-tracing-demo
+      build: 
+        context: ./
+      environment: 
+        - JAEGER_AGENT_HOST=jaeger
+        - ADD_OPENTRACING=True
+      ports:
+        - "5002:80"
+
+## --------- OpenTracing Demo (dotnet core) -------------- ##
+  open-tracing-disabled:
+      image: open-tracing-demo  
+      environment: 
+        - JAEGER_AGENT_HOST=jaeger
+        - ADD_OPENTRACING=False
+      ports:
+        - "5003:80"
+      depends_on: 
+        - open-tracing-eanbled

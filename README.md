@@ -41,3 +41,7 @@ for x in `seq 1 5`; do curl -s http://localhost:5002/api/values | grep --color -
 # Running against docker instance with OpenTracing disabled, resulted in 5 traces (each with 1 spans)
 for x in `seq 1 5`; do curl -s http://localhost:5003/api/values | grep --color -E 'value'; sleep .4; done;
 ```
+
+### Results of the 3 tests above:
+![image](https://user-images.githubusercontent.com/557065/43482101-0683ccd6-9508-11e8-861c-49ccfc23aeab.png)
+

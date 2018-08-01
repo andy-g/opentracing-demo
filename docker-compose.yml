@@ -15,7 +15,9 @@ services:
       build: 
         context: ./
       environment: 
+        - JAEGER_SERVICE_NAME=Open Tracing Demo
         - JAEGER_AGENT_HOST=jaeger
+        - JAEGER_SAMPLER_TYPE=const
         - ADD_OPENTRACING=True
       ports:
         - "5002:80"
@@ -24,7 +26,9 @@ services:
   open-tracing-disabled:
       image: open-tracing-demo  
       environment: 
+        - JAEGER_SERVICE_NAME=Open Tracing Demo
         - JAEGER_AGENT_HOST=jaeger
+        - JAEGER_SAMPLER_TYPE=const
         - ADD_OPENTRACING=False
       ports:
         - "5003:80"

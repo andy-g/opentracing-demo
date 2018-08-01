@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace opentracing_demo.Controllers {
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get () {
-            using (var scope = _tracer.BuildSpan ("publish-order-created-event").StartActive (true)) {
+            using (var scope = _tracer.BuildSpan ("Get Orders").StartActive (true)) {
                 return new string[] { "value1", "value2" };
             }
         }

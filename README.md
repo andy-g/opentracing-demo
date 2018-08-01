@@ -12,10 +12,10 @@ dotnet add package OpenTracing.Contrib.NetCore
 ## With dotnet installed locally:
 ```
 docker-compose up jaeger
-env ADD_OPENTRACING=True JAEGER_AGENT_HOST=localhost dotnet run
+env ADD_OPENTRACING=True JAEGER_SERVICE_NAME="Open Tracing Demo" JAEGER_AGENT_HOST=localhost JAEGER_SAMPLER_TYPE=const dotnet run
 for x in `seq 1 5`; do curl -s http://localhost:5000/api/values | grep --color -E 'value'; sleep .4; done;
 
-env ADD_OPENTRACING=False dotnet run
+env ADD_OPENTRACING=False JAEGER_SERVICE_NAME="Open Tracing Demo" JAEGER_AGENT_HOST=localhost JAEGER_SAMPLER_TYPE=const dotnet run
 for x in `seq 1 5`; do curl -s http://localhost:5000/api/values | grep --color -E 'value'; sleep .4; done;
 ```
 
@@ -27,7 +27,7 @@ but then I ran this in docker and it seems to be working, so I wonder if it coul
 docker-compose up --build
 
 # Start a version on the local machine (in my case Mac OS)
-env ADD_OPENTRACING=True JAEGER_AGENT_HOST=localhost dotnet run
+env ADD_OPENTRACING=True JAEGER_SERVICE_NAME="Open Tracing Demo" JAEGER_AGENT_HOST=localhost JAEGER_SAMPLER_TYPE=const dotnet run
 ```
 
 Then I ran the following:

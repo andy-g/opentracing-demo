@@ -35,13 +35,10 @@ namespace opentracing_demo {
 
             // Adds the Jaeger Tracer.
             services.AddSingleton<ITracer> (serviceProvider => {
-                string serviceName = serviceProvider.GetRequiredService<IHostingEnvironment> ().ApplicationName;
-                var sender = new Jaeger.Senders.UdpSender (Configuration["JAEGER_AGENT_HOST"], 6831, 0);
-                var remoteReporter = new RemoteReporter.Builder ().WithSender (sender).Build ();
-                var tracer = new Tracer.Builder (serviceName)
-                    .WithSampler (new ConstSampler (sample: true))
-                    .WithReporter (remoteReporter)
-                    .Build ();
+                var loggerFactory = serviceProvider.GetService<ILoggerFactory> ();
+                // Configure Jaeger tracer from Env variables:
+                // https://github.com/jaegertracing/jaeger-client-csharp#configuration-via-environment
+                var tracer = Jaeger.Configuration.FromEnv (loggerFactory).GetTracer ();
 
                 // Allows code that can't use DI to also access the tracer.
                 GlobalTracer.Register (tracer);
